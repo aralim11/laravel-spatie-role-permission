@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert2.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -43,6 +44,15 @@
 
         .error_msg{
             border: 1px solid red;
+        }
+
+        .card_btn_xs{
+            padding-top: 1px;
+            padding-bottom: 0px;
+        }
+
+        .table thead{
+            background-color: darkgray;
         }
     </style>
 </head>
@@ -80,10 +90,10 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('/role') }}">{{ __('Category') }}</a>
+                                <a class="nav-link" href="{{ URL::to('/category') }}">{{ __('Category') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('/role') }}">{{ __('Blog Post') }}</a>
+                                <a class="nav-link" href="{{ URL::to('/blog') }}">{{ __('Blog Post') }}</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -92,9 +102,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('Permission') }}</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/permission-group') }}">{{ __('Permission Group') }}</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/permission') }}">{{ __('Permission') }}</a>
                                     <a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('Role') }}</a>
-                                    <a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('User') }}</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/user') }}">{{ __('User') }}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -135,6 +146,26 @@
 				}
 			});
             return fail;
+        }
+
+        function successAlert(msg){
+            Swal.fire({
+			  position: 'top-end',
+			  icon: 'success',
+			  title: msg,
+			  showConfirmButton: false,
+			  timer: 1500
+			})
+        }
+
+        function errorAlert(msg){
+            Swal.fire({
+			  position: 'top-end',
+			  icon: 'error',
+			  title: msg,
+			  showConfirmButton: false,
+			  timer: 1500
+			})
         }
     </script>
     @stack('scripts')

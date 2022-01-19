@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', 'Role')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span>{{ __('Role') }}</span><button type="button" class="btn btn-info btn-sm float_right" onclick="addRoleModal()">Add Role</button></div>
+                    <div class="card-header"><span>@yield('title')</span><button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addRoleModal()">Add @yield('title')</button></div>
                     <div class="card-body">
                         
                     </div>
@@ -18,13 +20,13 @@
         <div class="modal-dialog">
             <div class="modal-content" id="role_add_form">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add @yield('title')</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Role Name</label>
-                        <input type="text" class="form-control" id="role_name" placeholder="Enter Role Name" required>
+                        <label for="name" class="col-form-label">Role Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Role Name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -45,17 +47,27 @@
         function storeRole(){
             var validation = formValidation('role_add_form');
             if(!validation){
-                var roleName = $("#role_name").val();
+                var name = $("#name").val();
                 $.ajax({
                     type: 'POST',
                     url: "/role-store",
-                    data: {roleName: roleName},
+                    data: {name: name},
                     dataType: "json",
                     success: function(resultData) {
-                        console.log(resultData); 
+                        if (resultData.status === "success") {
+                            $("#name").val('');
+                            successAlert(resultData.msg);
+                            viewRole();
+                        } else {
+                            errorAlert(resultData.msg);
+                        } 
                     }
                 });
             }
+        }
+
+        function viewRole(){
+
         }
     </script>
 @endpush

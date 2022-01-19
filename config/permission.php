@@ -47,6 +47,12 @@ return [
         'permissions' => 'permissions',
 
         /*
+        * I add this custom table for add permission group. 
+        */
+        
+        'permission_groups' => 'permission_groups',
+
+        /*
          * When using the "HasPermissions" trait from this package, we need to know which
          * table should be used to retrieve your models permissions. We have chosen a
          * basic default value but you may easily change it to any table you like.
