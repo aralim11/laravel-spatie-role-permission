@@ -26,12 +26,14 @@ Route::group(['middleware' => ['auth']], function () {
     // Permission Group Route
     Route::get('/permission-group', [PermissionGroupController::class, 'index']); // Show All User
     Route::post('/permission-group-store', [PermissionGroupController::class, 'storePermissionGroup']); // Store Permission group Name to Database
-    Route::get('/permission-view', [PermissionController::class, 'viewPermission']); // View Permission List
+    Route::get('/permission-group-view', [PermissionGroupController::class, 'viewPermissionGroup']); // View Permission Group List
+    Route::get('/permission-group-edit/{id}', [PermissionGroupController::class, 'editPermissionGroup']); // Edit Permission Group List
+    Route::post('/permission-group-update', [PermissionGroupController::class, 'updatePermissionGroup']); // Update Permission Group List
 
     // Permission Route
     Route::get('/permission', [PermissionController::class, 'index']); // Show All Permission
     Route::post('/permission-store', [PermissionController::class, 'storePermission']); // Store Permission Name to Database
-    Route::get('/permission-group-view', [PermissionController::class, 'viewPermissionGroup']); // View Permission List
+    Route::get('/permission-view', [PermissionController::class, 'viewPermission']); // View Permission List
 
     // Category Route
     Route::get('/category', [CategoryController::class, 'index']); // Show All Category
@@ -42,4 +44,5 @@ Route::group(['middleware' => ['auth']], function () {
     // Role Route
     Route::get('/role', [RoleController::class, 'index']); // Show All Role
     Route::post('/role-store', [RoleController::class, 'roleStore']); // Store Role Name to Database
+    Route::get('/role-view', [RoleController::class, 'viewRole']); // View Role List
 });

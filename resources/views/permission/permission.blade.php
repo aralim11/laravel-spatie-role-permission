@@ -9,11 +9,12 @@
                 <div class="card">
                     <div class="card-header"><span>@yield('title')</span><button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addpermissionModal()">Add @yield('title')</button></div>
                     <div class="card-body">
-                        <table id="permissionTable" class="table table-striped" style="width:100%">
+                        <table id="permissionTable" class="table table-striped hundred_percent">
                             <thead>
                                 <tr>
                                     <th>Serial</th>
-                                    <th>Permission name</th>
+                                    <th>Permission Group Name</th>
+                                    <th>Permission Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -35,6 +36,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Permission Group</label>
+                        <select class="form-select" id="group_id" aria-label="Default select example" required>
+                            <option value="">Select Permission Group</option>
+                            @foreach($permissionGroups as $permissionGroup)
+                            <option value="{{ $permissionGroup->id }}">{{ $permissionGroup->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Permission Name</label>
                         <input type="text" class="form-control" id="name" placeholder="Enter Permission Name" required>
@@ -63,14 +74,16 @@
             var validation = formValidation('permission_add_form');
             if(!validation){
                 var name = $("#name").val();
+                var group_id = $("#group_id").val();
                 $.ajax({
                     type: 'POST',
                     url: "/permission-store",
-                    data: {name: name},
+                    data: {name: name, group_id: group_id},
                     dataType: "json",
                     success: function(resultData) {
                         if (resultData.status === "success") {
                             $("#name").val('');
+                            $("#group_id ").val('');
                             successAlert(resultData.msg);
                             viewPermission();
                         } else {

@@ -54,6 +54,13 @@
         .table thead{
             background-color: darkgray;
         }
+
+        .fifty_percent{
+            width: 50%;
+        }
+        .hundred_percent{
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +132,15 @@
             @yield('content')
         </main>
     </div>
+
+    <div class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="main_modal_content">
+
+            </div>
+        </div>
+    </div>
+
     <script>
         $.ajaxSetup({
             headers: {

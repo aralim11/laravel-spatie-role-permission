@@ -10,7 +10,8 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        return view('permission.permission');
+        $permissionGroups = DB::table('permission_groups')->get();
+        return view('permission.permission', compact(['permissionGroups']));
     }
 
     public function storePermission(Request $request)
@@ -25,6 +26,7 @@ class PermissionController extends Controller
 
             DB::table('permissions')->insert([
                 'name' => $request->name,
+                'group_id' => $request->group_id,
                 'guard_name' => "web",
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
@@ -40,8 +42,10 @@ class PermissionController extends Controller
         $html = "";
 
         foreach($permissions as $permission){
+            $groupName = DB::table('permission_groups')->where('id', $permission->group_id)->first();
             $html .= '<tr>
                         <td>'.$i++.'</td>
+                        <td>'.$groupName->name.'</td>
                         <td>'.$permission->name.'</td>
                         <td><button type="button" class="btn btn-info btn-sm">Edit</button></td>
                     </tr>';

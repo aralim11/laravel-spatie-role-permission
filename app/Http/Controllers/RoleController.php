@@ -10,7 +10,14 @@ class RoleController extends Controller
 {
     public function index()
     {
-        return view('role.role');
+        $permission_groups = DB::table('permission_groups')
+                            ->get();
+
+        // echo "<pre>";
+        // print_r($permission_groups);
+        // exit();
+
+        return view('role.role', compact(['permission_groups']));
     }
 
     public function roleStore(Request $request)
@@ -32,5 +39,22 @@ class RoleController extends Controller
 
             return response()->json(['status' => 'success', 'msg' => 'Role Added Successfully!!']);
         }
+    }
+
+    public function viewRole()
+    {
+        $roles = DB::table('roles')->get();
+        $i = 1;
+        $html = "";
+
+        foreach($roles as $role){
+            $html .= '<tr>
+                        <td>'.$i++.'</td>
+                        <td>'.$role->name.'</td>
+                        <td><button type="button" class="btn btn-info btn-sm">Edit</button></td>
+                     </tr>';
+        }
+
+        return response()->json(['status' => 'success', 'msg' => $html]);
     }
 }

@@ -51,6 +51,10 @@
 
 @push('scripts')
     <script>
+        $( document ).ready(function() {
+            viewPermissionGroup();
+        });
+
         function addpermissionGroupModal(){
             $("#addPermissionGroupModal").modal('show');
         }
@@ -90,6 +94,44 @@
                     }
                 }
             });
+        }
+
+        function openEditpermissionGroupModal(id){
+            $.ajax({
+                type: 'GET',
+                url: "/permission-group-edit/" + id,
+                dataType: "json",
+                success: function(resultData) {
+                    if (resultData.status === "success") {
+                        $("#main_modal_content").html(resultData.msg);
+                        $("#mainModal").modal('show');
+                    } else {
+                        errorAlert("No Data Found By ID!!");
+                    }
+                }
+            });
+        }
+
+        function updatePermissionGroup(id){
+            var validation = formValidation('main_modal_content');
+            if(!validation){
+                var name = $("#edit_name").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/permission-group-update",
+                    data: {name: name, id: id},
+                    dataType: "json",
+                    success: function(resultData) {
+                        if (resultData.status === "success") {
+                            $("#name").val('');
+                            successAlert(resultData.msg);
+                            viewPermissionGroup();
+                        } else {
+                            errorAlert(resultData.msg);
+                        }
+                    }
+                });
+            }
         }
     </script>
 @endpush
