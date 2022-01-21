@@ -10,13 +10,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $permission_groups = DB::table('permission_groups')
-                            ->get();
-
-        // echo "<pre>";
-        // print_r($permission_groups);
-        // exit();
-
+        $permission_groups = DB::table('permission_groups')->get();
         return view('role.role', compact(['permission_groups']));
     }
 

@@ -108,5 +108,43 @@
                 }
             });
         }
+
+        function openEditpermissionGroupModal(id){
+            $.ajax({
+                type: 'GET',
+                url: "/permission-edit/" + id,
+                dataType: "json",
+                success: function(resultData) {
+                    if (resultData.status === "success") {
+                        $("#main_modal_content").html(resultData.msg);
+                        $("#mainModal").modal('show');
+                    } else {
+                        errorAlert("No Data Found By ID!!");
+                    }
+                }
+            });
+        }
+
+        function updatePermission(id){
+            var validation = formValidation('main_modal_content');
+            if(!validation){
+                var name = $("#edit_name").val();
+                var group_id = $("#edit_group_id").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/permission-update",
+                    data: {name: name, id: id, group_id: group_id},
+                    dataType: "json",
+                    success: function(resultData) {
+                        if (resultData.status === "success") {
+                            successAlert(resultData.msg);
+                            viewPermission();
+                        } else {
+                            errorAlert(resultData.msg);
+                        }
+                    }
+                });
+            }
+        }
     </script>
 @endpush

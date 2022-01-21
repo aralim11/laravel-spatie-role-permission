@@ -61,6 +61,10 @@
         .hundred_percent{
             width: 100%;
         }
+
+        .table_bottom_border{
+            border-bottom: 1px solid currentColor;
+        }
     </style>
 </head>
 <body>

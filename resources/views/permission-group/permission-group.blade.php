@@ -123,7 +123,6 @@
                     dataType: "json",
                     success: function(resultData) {
                         if (resultData.status === "success") {
-                            $("#name").val('');
                             successAlert(resultData.msg);
                             viewPermissionGroup();
                         } else {

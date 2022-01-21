@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/permission', [PermissionController::class, 'index']); // Show All Permission
     Route::post('/permission-store', [PermissionController::class, 'storePermission']); // Store Permission Name to Database
     Route::get('/permission-view', [PermissionController::class, 'viewPermission']); // View Permission List
+    Route::get('/permission-edit/{id}', [PermissionController::class, 'editPermission']); // Edit Permission List
+    Route::post('/permission-update', [PermissionController::class, 'updatePermission']); // Update Permission
 
     // Category Route
     Route::get('/category', [CategoryController::class, 'index']); // Show All Category

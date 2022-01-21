@@ -40,11 +40,11 @@
                         <input type="text" class="form-control" id="name" placeholder="Enter Role Name" required>
                     </div>
 
-                    <h5>All Permissions</h5>
+                    <h5>All Permissions</h5><hr style="background-color: black!important;">
                     <table class="hundred_percent">
                         <tbody>
                             @foreach($permission_groups as $permission_group)
-                                <tr>
+                                <tr class="table_bottom_border">
                                     <td class="fifty_percent">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -52,19 +52,17 @@
                                         </div>
                                     </td>
 
+                                    @php
+                                       $permissions = DB::table('permissions')->where('group_id', $permission_group->id)->get(); 
+                                    @endphp
+                    
                                     <td class="fifty_percent">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">Add Post</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">Add Post</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">Add Post</label>
-                                        </div>
+                                        @foreach($permissions as $permission)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">{{ $permission->name }}</label>
+                                            </div>
+                                        @endforeach
                                     </td>
                                 </tr>
                             @endforeach
