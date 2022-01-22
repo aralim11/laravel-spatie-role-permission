@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -24,12 +25,8 @@ class RoleController extends Controller
             return response()->json(['status' => 'error', 'msg' => 'Role Can\'t Be Duplicate!!']);
         } else {
 
-            DB::table('roles')->insert([
-                'name' => $request->name,
-                'guard_name' => "web",
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s"),
-            ]);
+            $role = Role::create(['name' => $request->name]);
+            $role->syncPermissions($request->permission);
 
             return response()->json(['status' => 'success', 'msg' => 'Role Added Successfully!!']);
         }

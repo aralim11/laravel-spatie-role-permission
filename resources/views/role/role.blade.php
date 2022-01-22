@@ -47,8 +47,8 @@
                                 <tr class="table_bottom_border">
                                     <td class="fifty_percent">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">{{ $permission_group->name }}</label>
+                                            <input class="form-check-input" type="checkbox" value="{{ $permission_group->id }}" id="permission_group_{{ $permission_group->id }}" onclick="checkAllPermissionByGroup({{ $permission_group->id }})">
+                                            <label class="form-check-label" for="permission_group_{{ $permission_group->id }}">{{ $permission_group->name }}</label>
                                         </div>
                                     </td>
 
@@ -59,8 +59,8 @@
                                     <td class="fifty_percent">
                                         @foreach($permissions as $permission)
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">{{ $permission->name }}</label>
+                                                <input class="form-check-input checkAllPermissionByGroup_{{$permission_group->id}}" name="checkPermission" type="checkbox" value="{{$permission->name}}" id="checkPermission{{ $permission->id }}">
+                                                <label class="form-check-label" for="checkPermission{{ $permission->id }}">{{ $permission->name }}</label>
                                             </div>
                                         @endforeach
                                     </td>
@@ -93,14 +93,20 @@
             var validation = formValidation('role_add_form');
             if(!validation){
                 var name = $("#name").val();
+                var permissionArray = [];
+                $.each($("input[name='checkPermission']:checked"), function(){
+                    permissionArray.push($(this).val());
+                });
+
                 $.ajax({
                     type: 'POST',
                     url: "/role-store",
-                    data: {name: name},
+                    data: {name: name, permission: permissionArray},
                     dataType: "json",
                     success: function(resultData) {
                         if (resultData.status === "success") {
                             $("#name").val('');
+                            $('input:checkbox').prop('checked', false);
                             successAlert(resultData.msg);
                             viewRole();
                         } else {
@@ -124,6 +130,16 @@
                     }
                 }
             });
+        }
+
+        function checkAllPermissionByGroup(id){
+            var groupIdName = $('#permission_group_'+id);
+
+            if (groupIdName.is(':checked')) {
+                $('.checkAllPermissionByGroup_'+id).prop('checked', true);
+            } else {
+                $('.checkAllPermissionByGroup_'+id).prop('checked', false);
+            }
         }
     </script>
 @endpush
