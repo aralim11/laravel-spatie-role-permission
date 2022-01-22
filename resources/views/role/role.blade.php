@@ -91,17 +91,14 @@
 
         function storeRole(){
             var validation = formValidation('role_add_form');
-            if(!validation){
+            var checkBoxValidation = checkBoxNullValidation();
+            
+            if(!validation && (checkBoxValidation != false)){
                 var name = $("#name").val();
-                var permissionArray = [];
-                $.each($("input[name='checkPermission']:checked"), function(){
-                    permissionArray.push($(this).val());
-                });
-
                 $.ajax({
                     type: 'POST',
                     url: "/role-store",
-                    data: {name: name, permission: permissionArray},
+                    data: {name: name, permission: checkBoxValidation},
                     dataType: "json",
                     success: function(resultData) {
                         if (resultData.status === "success") {

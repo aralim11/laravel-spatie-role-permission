@@ -168,6 +168,20 @@
             return fail;
         }
 
+        function checkBoxNullValidation(){
+            var permissionArray = [];
+            $.each($("input[name='checkPermission']:checked"), function(){
+                permissionArray.push($(this).val());
+            });
+
+            if (permissionArray.length === 0) {
+                $('.form-check-input').addClass('error_msg');
+                return false;
+            } else {
+                return permissionArray;
+            }
+        }
+
         function successAlert(msg){
             Swal.fire({
 			  position: 'top-end',
