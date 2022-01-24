@@ -59,7 +59,7 @@
                                     <td class="fifty_percent">
                                         @foreach($permissions as $permission)
                                             <div class="form-check">
-                                                <input class="form-check-input checkAllPermissionByGroup_{{$permission_group->id}}" name="checkPermission" type="checkbox" value="{{$permission->name}}" id="checkPermission{{ $permission->id }}">
+                                                <input class="form-check-input checkAllPermissionByGroup_{{$permission_group->id}}" onclick="checkGroupByPermission({{$permission_group->id}},{{count($permissions)}})" name="checkPermission" type="checkbox" value="{{$permission->name}}" id="checkPermission{{ $permission->id }}">
                                                 <label class="form-check-label" for="checkPermission{{ $permission->id }}">{{ $permission->name }}</label>
                                             </div>
                                         @endforeach
@@ -136,6 +136,54 @@
                 $('.checkAllPermissionByGroup_'+id).prop('checked', true);
             } else {
                 $('.checkAllPermissionByGroup_'+id).prop('checked', false);
+            }
+        }
+
+        function edit_checkAllPermissionByGroup(id){
+            var groupIdName = $('#edit_permission_group_'+id);
+
+            if (groupIdName.is(':checked')) {
+                $('.edit_checkAllPermissionByGroup_'+id).prop('checked', true);
+            } else {
+                $('.edit_checkAllPermissionByGroup_'+id).prop('checked', false);
+            }
+        }
+
+        function openEditRoleModal(id){
+            $.ajax({
+                type: 'GET',
+                url: "/role-edit/" + id,
+                dataType: "json",
+                success: function(resultData) {
+                    if (resultData.status === "success") {
+                        $("#main_modal_content").html(resultData.msg);
+                        $("#mainModal").modal('show');
+                    } else {
+                        errorAlert("No Data Found By ID!!");
+                    }
+                }
+            });
+        }
+
+        function checkGroupByPermission(group_id, count){
+            var permissionClass = $('.checkAllPermissionByGroup_'+group_id+':checked');
+            var groupCheckBox = $('#permission_group_'+group_id);
+
+            if (permissionClass.length === count) {
+                $('#permission_group_'+group_id).prop('checked', true);
+            } else {
+                $('#permission_group_'+group_id).prop('checked', false);
+            }
+        }
+
+        function edit_checkGroupByPermission(group_id, count){
+            var permissionClass = $('.edit_checkAllPermissionByGroup_'+group_id+':checked');
+            var groupCheckBox = $('#edit_permission_group_'+group_id);
+
+            if (permissionClass.length === count) {
+                $('#edit_permission_group_'+group_id).prop('checked', true);
+            } else {
+                $('#edit_permission_group_'+group_id).prop('checked', false);
             }
         }
     </script>

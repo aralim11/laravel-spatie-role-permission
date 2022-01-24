@@ -20,52 +20,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <style>
-        .float_right{
-            float: right;
-        }
-
-        .modal-header{
-            height: 45px;
-            background-color: aliceblue;
-        }
-
-        .modal-body .mb-3{
-            margin-top: -10px!important;
-        }
-
-        .card-header{
-            background-color: aliceblue;
-        }
-
-        .error_msg{
-            border: 1px solid red;
-        }
-
-        .card_btn_xs{
-            padding-top: 1px;
-            padding-bottom: 0px;
-        }
-
-        .table thead{
-            background-color: darkgray;
-        }
-
-        .fifty_percent{
-            width: 50%;
-        }
-        .hundred_percent{
-            width: 100%;
-        }
-
-        .table_bottom_border{
-            border-bottom: 1px solid currentColor;
-        }
-    </style>
 </head>
 <body>
     <div id="app">
