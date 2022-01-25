@@ -60,7 +60,7 @@ class RoleController extends Controller
                     <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body edit_role_add_form">
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Role Name</label>
                         <input type="text" class="form-control" value="'.$role->name.'" id="edit_name" placeholder="Enter Role Name" required>
@@ -100,7 +100,7 @@ class RoleController extends Controller
                                             if (!empty($hasPermission)) {$selected = "checked";} else {$selected = "";}
 
                                             $html .= '<div class="form-check">
-                                                <input class="form-check-input edit_checkAllPermissionByGroup_'.$permission_group->id.'" '.$selected.' onclick="edit_checkGroupByPermission('. $permission_group->id .' , '. count($permissions) .')" name="edit_checkPermission" type="checkbox" value="'.$permission->name.'" id="edit_checkPermission'.$permission->id.'">
+                                                <input class="form-check-input edit-fom-check edit_checkAllPermissionByGroup_'.$permission_group->id.'" '.$selected.' onclick="edit_checkGroupByPermission('. $permission_group->id .' , '. count($permissions) .')" name="edit_checkPermission" type="checkbox" value="'.$permission->name.'" id="edit_checkPermission'.$permission->id.'">
                                                 <label class="form-check-label" for="edit_checkPermission'.$permission->id.'">'. $permission->name .'</label>
                                             </div>';
                                         }
@@ -113,9 +113,28 @@ class RoleController extends Controller
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="storeRole()">Save</button>
+                    <button type="button" class="btn btn-primary" onclick="updateRole('.$role->id.')">Save</button>
                 </div>';
         
         return response()->json(['status' => 'success', 'msg' => $html]);
+    }
+
+    public function editUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $request->id],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'msg' => 'Role Can\'t Be Duplicate!!']);
+        } else {
+
+            $role = Role::findById($request->id);
+            $role->syncPermissions($request->permission);
+
+            DB::table('roles')->where('id', $request->id)->update(['name' => $request->name]);
+
+            return response()->json(['status' => 'success', 'msg' => 'Role Added Successfully!!']);
+        }
     }
 }

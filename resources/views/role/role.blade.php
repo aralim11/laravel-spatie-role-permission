@@ -150,11 +150,15 @@
         }
 
         function openEditRoleModal(id){
+            Swal.fire('Please Wait. Data Processing!!');
+			Swal.showLoading();
+
             $.ajax({
                 type: 'GET',
                 url: "/role-edit/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         $("#main_modal_content").html(resultData.msg);
                         $("#mainModal").modal('show');
@@ -184,6 +188,33 @@
                 $('#edit_permission_group_'+group_id).prop('checked', true);
             } else {
                 $('#edit_permission_group_'+group_id).prop('checked', false);
+            }
+        }
+
+        function updateRole(id){
+            var validation = formValidation('edit_role_add_form');
+            var checkBoxValidation = edit_checkBoxNullValidation();
+            
+            if(!validation && (checkBoxValidation != false)){
+                Swal.fire('Please Wait. Updating!!');
+				Swal.showLoading();
+
+                var name = $("#edit_name").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/role-update",
+                    data: {name: name, permission: checkBoxValidation, id: id},
+                    dataType: "json",
+                    success: function(resultData) {
+    					swal.close();
+                        if (resultData.status === "success") {
+                            successAlert(resultData.msg);
+                            viewRole();
+                        } else {
+                            errorAlert(resultData.msg);
+                        } 
+                    }
+                });
             }
         }
     </script>

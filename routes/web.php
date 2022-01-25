@@ -48,4 +48,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/role-store', [RoleController::class, 'roleStore']); // Store Role Name to Database
     Route::get('/role-view', [RoleController::class, 'viewRole']); // View Role
     Route::get('/role-edit/{id}', [RoleController::class, 'editRole']); // Edit Role
+    Route::post('/role-update', [RoleController::class, 'editUpdate']); // Update Role
+
+    //User Route
+    Route::get('/register', [RegisterController::class, 'index']); // Show All User
 });

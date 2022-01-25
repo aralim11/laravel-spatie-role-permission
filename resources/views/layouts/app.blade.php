@@ -140,6 +140,20 @@
             }
         }
 
+        function edit_checkBoxNullValidation(){
+            var permissionArray = [];
+            $.each($("input[name='edit_checkPermission']:checked"), function(){
+                permissionArray.push($(this).val());
+            });
+
+            if (permissionArray.length === 0) {
+                $('.edit-fom-check').addClass('error_msg');
+                return false;
+            } else {
+                return permissionArray;
+            }
+        }
+
         function successAlert(msg){
             Swal.fire({
 			  position: 'top-end',
