@@ -51,5 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/role-update', [RoleController::class, 'editUpdate']); // Update Role
 
     //User Route
-    Route::get('/register', [RegisterController::class, 'index']); // Show All User
+    Route::get('/users', [UserController::class, 'index']); // Show All User
+    Route::get('/user-view', [UserController::class, 'showUser']); // Show All User
+    Route::post('/user-store', [UserController::class, 'storeUser']); // Show All User
 });

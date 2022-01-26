@@ -74,7 +74,7 @@
                                     <a class="dropdown-item" href="{{ URL::to('/permission-group') }}">{{ __('Permission Group') }}</a>
                                     <a class="dropdown-item" href="{{ URL::to('/permission') }}">{{ __('Permission') }}</a>
                                     <a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('Role') }}</a>
-                                    <a class="dropdown-item" href="{{ URL::to('/user') }}">{{ __('User') }}</a>
+                                    <a class="dropdown-item" href="{{ URL::to('/register') }}">{{ __('User') }}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
