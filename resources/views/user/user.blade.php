@@ -48,8 +48,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="role_id" class="col-form-label">User Role <span class="req">*</span></label>
-                        <select class="form-select" id="role_id" aria-label="Default select example" required>
+                        <label for="role_id" class="col-form-label">User Role</label>
+                        <select class="form-select" id="role_id" aria-label="Default select example">
                             <option value="">Select User Role</option>
                             @foreach($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -116,6 +116,45 @@
                     }
                 }
             });
+        }
+
+        function openEditUserModal(id){
+            $.ajax({
+                type: 'GET',
+                url: "/user-edit/" + id,
+                dataType: "json",
+                success: function(resultData) {
+                    if (resultData.status === "success") {
+                        $("#main_modal_content").html(resultData.msg);
+                        $("#mainModal").modal('show');
+                    } else {
+                        errorAlert("No Data Found By ID!!");
+                    }
+                }
+            });
+        }
+
+        function updateUser(id){
+            var validation = formValidation('main_modal_content');
+            if(!validation){
+                var name = $("#edit_name").val();
+                var email = $("#edit_email").val();
+                var role_id = $("#edit_role_id").val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/user-update",
+                    data: {name: name, email: email, role_id: role_id, id: id},
+                    dataType: "json",
+                    success: function(resultData) {
+                        if (resultData.status === "success") {
+                            successAlert(resultData.msg);
+                            viewUser();
+                        } else {
+                            errorAlert(resultData.msg);
+                        }
+                    }
+                });
+            }
         }
     </script>
 @endpush

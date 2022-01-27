@@ -7,14 +7,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span>@yield('title')</span><button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addpermissionGroupModal()">Add @yield('title')</button></div>
+                    <div class="card-header"><span>@yield('title')</span>@if(Auth::User()->can('permission.group.add'))<button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addpermissionGroupModal()">Add @yield('title')</button>@endif</div>
                     <div class="card-body">
                         <table id="permissionTable" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Serial</th>
                                     <th>Permission Group Name</th>
-                                    <th>Action</th>
+                                    @if(Auth::User()->can('permission.group.edit'))<th>Action</th>@endif
                                 </tr>
                             </thead>
                             <tbody id="table_content">

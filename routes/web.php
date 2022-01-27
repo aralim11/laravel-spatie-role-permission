@@ -51,7 +51,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/role-update', [RoleController::class, 'editUpdate']); // Update Role
 
     //User Route
-    Route::get('/users', [UserController::class, 'index']); // Show All User
-    Route::get('/user-view', [UserController::class, 'showUser']); // Show All User
-    Route::post('/user-store', [UserController::class, 'storeUser']); // Show All User
+    Route::get('/users', [UserController::class, 'index']); // Show All User View
+    Route::get('/user-view', [UserController::class, 'showUser']); // Show All Users Ajax request
+    Route::post('/user-store', [UserController::class, 'storeUser']); // Store New User To Database
+    Route::get('/user-edit/{id}', [UserController::class, 'editUser']); // Edit User Data View
+    Route::post('/user-update', [UserController::class, 'updateUser']); // Update User
 });

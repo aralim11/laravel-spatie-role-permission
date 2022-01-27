@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionGroupController extends Controller
 {
     public function index()
     {
-        return view('permission-group.permission-group');
+        if (Auth::User()->can('permission.group.view')) {
+            return view('permission-group.permission-group');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function storePermissionGroup(Request $request)
@@ -43,9 +48,9 @@ class PermissionGroupController extends Controller
         foreach($permissionsGroups as $permissionsGroup){
             $html .= '<tr>
                         <td>'.$i++.'</td>
-                        <td>'.$permissionsGroup->name.'</td>
-                        <td><button type="button" onclick="openEditpermissionGroupModal('.$permissionsGroup->id.')" class="btn btn-info btn-sm">Edit</button></td>
-                    </tr>';
+                        <td>'.$permissionsGroup->name.'</td>';
+                        if (Auth::User()->can('permission.group.edit')) {$html .= '<td><button type="button" onclick="openEditpermissionGroupModal('.$permissionsGroup->id.')" class="btn btn-info btn-sm">Edit</button></td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);
