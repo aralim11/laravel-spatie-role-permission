@@ -55,7 +55,7 @@ class RoleController extends Controller
     {
         $role = DB::table('roles')->where('id', $id)->first();
         $permission_groups = DB::table('permission_groups')->get();
-        
+
         $html = '<div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -96,7 +96,7 @@ class RoleController extends Controller
                                                             ->where('permission_id', $permission->id)
                                                             ->where('role_id', $role->id)
                                                             ->first();
-                                            
+
                                             if (!empty($hasPermission)) {$selected = "checked";} else {$selected = "";}
 
                                             $html .= '<div class="form-check">
@@ -115,7 +115,7 @@ class RoleController extends Controller
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="updateRole('.$role->id.')">Save</button>
                 </div>';
-        
+
         return response()->json(['status' => 'success', 'msg' => $html]);
     }
 

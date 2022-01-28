@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Category Route
     Route::get('/category', [CategoryController::class, 'index']); // Show All Category
+    Route::post('/category-store', [CategoryController::class, 'storeCategory']); // Store Category Name to Database
+    Route::get('/category-view', [CategoryController::class, 'viewCategory']); // View Category Name
+    Route::get('/category-edit/{id}', [CategoryController::class, 'editCategory']); // Edit Category Name
+    Route::post('/category-update', [CategoryController::class, 'updateCategory']); // Update Category Name
 
     // Blog Route
     Route::get('/blog', [BlogPostController::class, 'index']); // Show All Blog Post

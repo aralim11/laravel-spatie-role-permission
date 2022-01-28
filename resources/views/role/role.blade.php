@@ -18,7 +18,7 @@
                                 </tr>
                             </thead>
                             <tbody id="table_content">
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -53,9 +53,9 @@
                                     </td>
 
                                     @php
-                                       $permissions = DB::table('permissions')->where('group_id', $permission_group->id)->get(); 
+                                       $permissions = DB::table('permissions')->where('group_id', $permission_group->id)->get();
                                     @endphp
-                    
+
                                     <td class="fifty_percent">
                                         @foreach($permissions as $permission)
                                             <div class="form-check">
@@ -92,7 +92,7 @@
         function storeRole(){
             var validation = formValidation('role_add_form');
             var checkBoxValidation = checkBoxNullValidation();
-            
+
             if(!validation && (checkBoxValidation != false)){
                 var name = $("#name").val();
                 $.ajax({
@@ -108,7 +108,7 @@
                             viewRole();
                         } else {
                             errorAlert(resultData.msg);
-                        } 
+                        }
                     }
                 });
             }
@@ -122,6 +122,7 @@
                 success: function(resultData) {
                     if (resultData.status === "success") {
                         $("#table_content").html(resultData.msg);
+                        $("#permissionTable").dataTable();
                     } else {
                         $("#table_content").html('ok');
                     }
@@ -194,7 +195,7 @@
         function updateRole(id){
             var validation = formValidation('edit_role_add_form');
             var checkBoxValidation = edit_checkBoxNullValidation();
-            
+
             if(!validation && (checkBoxValidation != false)){
                 Swal.fire('Please Wait. Updating!!');
 				Swal.showLoading();
@@ -212,7 +213,7 @@
                             viewRole();
                         } else {
                             errorAlert(resultData.msg);
-                        } 
+                        }
                     }
                 });
             }

@@ -20,7 +20,7 @@
                                 </tr>
                             </thead>
                             <tbody id="table_content">
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -97,7 +97,7 @@
                             viewRole();
                         } else {
                             errorAlert(resultData.msg);
-                        } 
+                        }
                     }
                 });
             }
@@ -111,6 +111,7 @@
                 success: function(resultData) {
                     if (resultData.status === "success") {
                         $("#table_content").html(resultData.msg);
+                        $("#permissionTable").dataTable();
                     } else {
                         $("#table_content").html('ok');
                     }
