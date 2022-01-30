@@ -57,7 +57,7 @@ class UserController extends Controller
                 ->first();
             
                 if (!empty($role)){$assignedRole = "<span class=\"badge bg-success\">$role->name</span>";} else {$assignedRole = "<span class=\"badge bg-warning text-dark\">Not Assigned Yets</span>";}
-
+                
             $html .= '<tr>
                         <td>'.$i++.'</td>
                         <td>'.$user->name.'</td>

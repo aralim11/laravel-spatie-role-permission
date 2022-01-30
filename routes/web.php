@@ -46,6 +46,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Blog Route
     Route::get('/blog', [BlogPostController::class, 'index']); // Show All Blog Post
+    Route::post('/blog-store', [BlogPostController::class, 'storeBlog']); // Store Blog to Database
+    Route::get('/blog-view', [BlogPostController::class, 'viewBlog']); // View Blog
+    Route::get('/blog-edit/{id}', [BlogPostController::class, 'editBlog']); // Edit Blog
+    Route::post('/blog-update', [BlogPostController::class, 'updateBlog']); // Update Blog
+    Route::delete('/blog-delete/{id}', [BlogPostController::class, 'deleteBlog']); // Delete Blog
 
     // Role Route
     Route::get('/role', [RoleController::class, 'index']); // Show All Role

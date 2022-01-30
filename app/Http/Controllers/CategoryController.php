@@ -53,8 +53,9 @@ class CategoryController extends Controller
     public function editCategory($id)
     {
         $category = DB::table('category')->where('id', $id)->first();
+        $html = "";
 
-        $html = '<div class="modal-header">
+        $html .= '<div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
