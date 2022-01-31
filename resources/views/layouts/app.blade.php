@@ -63,12 +63,13 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
+                            @if(Auth::User()->can('category.view'))<li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/category') }}">{{ __('Category') }}</a>
-                            </li>
-                            <li class="nav-item">
+                            </li>@endif
+
+                            @if(Auth::User()->can('blog.view'))<li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('/blog') }}">{{ __('Blog Post') }}</a>
-                            </li>
+                            </li>@endif
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -77,9 +78,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @if(Auth::User()->can('permission.group.view'))<a class="dropdown-item" href="{{ URL::to('/permission-group') }}">{{ __('Permission Group') }}</a>@endif
-                                    <a class="dropdown-item" href="{{ URL::to('/permission') }}">{{ __('Permission') }}</a>
-                                    <a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('Role') }}</a>
-                                    <a class="dropdown-item" href="{{ URL::to('/users') }}">{{ __('User') }}</a>
+                                    @if(Auth::User()->can('permission.view'))<a class="dropdown-item" href="{{ URL::to('/permission') }}">{{ __('Permission') }}</a>@endif
+                                    @if(Auth::User()->can('role.view'))<a class="dropdown-item" href="{{ URL::to('/role') }}">{{ __('Role') }}</a>@endif
+                                    @if(Auth::User()->can('user.view'))<a class="dropdown-item" href="{{ URL::to('/users') }}">{{ __('User') }}</a>@endif
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>

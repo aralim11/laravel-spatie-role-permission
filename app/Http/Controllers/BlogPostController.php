@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class BlogPostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:blog.view|blog.add|blog.edit|blog.delete']);
+    }
+
     public function index()
     {
         $categories = DB::table('category')->get();
@@ -52,12 +58,12 @@ class BlogPostController extends Controller
             $html .= '<tr>
                         <td>'.$i++.'</td>
                         <td>'.$blog->name.'</td>
-                        <td>'.$blog->title.'</td>
-                        <td>
-                            <button type="button" onclick="openEditBlogModal('.$blog->id.')" class="btn btn-info btn-sm">Edit</button>
-                            <button type="button" onclick="deleteBlog('.$blog->id.')" class="btn btn-danger btn-sm">Edit</button>
-                        </td>
-                    </tr>';
+                        <td>'.$blog->title.'</td>';
+                        if (Auth::User()->can('blog.edit') || Auth::User()->can('blog.delete')) {$html .= '<td>';
+                            if (Auth::User()->can('blog.edit')) {$html .= '<button type="button" onclick="openEditBlogModal('.$blog->id.')" class="btn btn-info btn-sm">Edit</button>';}
+                        if (Auth::User()->can('blog.delete')) {$html .= '<button type="button" onclick="deleteBlog('.$blog->id.')" class="btn btn-danger btn-sm">Edit</button>';}
+                        $html .= '</td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);

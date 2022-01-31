@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:category.view|category.add|category.edit|category.delete']);
+    }
+
     public function index()
     {
         return view('category.category');
@@ -42,9 +48,9 @@ class CategoryController extends Controller
         foreach($categories as $category){
             $html .= '<tr>
                         <td>'.$i++.'</td>
-                        <td>'.$category->name.'</td>
-                        <td><button type="button" onclick="openEditCategoryModal('.$category->id.')" class="btn btn-info btn-sm">Edit</button></td>
-                    </tr>';
+                        <td>'.$category->name.'</td>';
+                        if (Auth::User()->can('category.edit')) {$html .= '<td><button type="button" onclick="openEditCategoryModal('.$category->id.')" class="btn btn-info btn-sm">Edit</button></td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);

@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PermissionGroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:permission.group.view|permission.group.add|permission.group.edit|permission.group.delete']);
+    }
+
     public function index()
     {
-        if (Auth::User()->can('permission.group.view')) {
-            return view('permission-group.permission-group');
-        } else {
-            return redirect()->back();
-        }
+        return view('permission-group.permission-group');
     }
 
     public function storePermissionGroup(Request $request)

@@ -7,14 +7,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span>@yield('title')</span><button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addCategoryModal()">Add @yield('title')</button></div>
+                    <div class="card-header"><span>@yield('title')</span>@if(Auth::User()->can('category.add'))<button type="button" class="btn btn-info btn-sm card_btn_xs float_right" onclick="addCategoryModal()">Add @yield('title')</button>@endif</div>
                     <div class="card-body">
                         <table id="permissionTable" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Serial</th>
                                     <th>Category Name</th>
-                                    <th>Action</th>
+                                    @if(Auth::User()->can('category.edit'))<th>Action</th>@endif
                                 </tr>
                             </thead>
                             <tbody id="table_content">

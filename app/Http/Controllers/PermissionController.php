@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:permission.view|permission.add|permission.edit|permission.delete']);
+    }
+
     public function index()
     {
         $permissionGroups = DB::table('permission_groups')->get();
@@ -46,9 +52,9 @@ class PermissionController extends Controller
             $html .= '<tr>
                         <td>'.$i++.'</td>
                         <td>'.$groupName->name.'</td>
-                        <td>'.$permission->name.'</td>
-                        <td><button type="button" class="btn btn-info btn-sm" onclick="openEditpermissionGroupModal('.$permission->id.')">Edit</button></td>
-                      </tr>';
+                        <td>'.$permission->name.'</td>';
+                        if(Auth::User()->can('permission.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditpermissionGroupModal('.$permission->id.')">Edit</button></td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);

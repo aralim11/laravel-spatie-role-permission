@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:user.view|user.add|user.edit|user.delete']);
+    }
+
     public function index()
     {
         $roles = DB::table('roles')->get();
@@ -62,9 +67,9 @@ class UserController extends Controller
                         <td>'.$i++.'</td>
                         <td>'.$user->name.'</td>
                         <td>'.$user->email.'</td>
-                        <td>'.$assignedRole.'</td>
-                        <td><button type="button" class="btn btn-info btn-sm" onclick="openEditUserModal('.$user->id.')">Edit</button></td>
-                     </tr>';
+                        <td>'.$assignedRole.'</td>';
+                        if (Auth::User()->can('user.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditUserModal('.$user->id.')">Edit</button></td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);
