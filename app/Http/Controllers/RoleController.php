@@ -7,12 +7,19 @@ use Illuminate\Support\Facades\Validator;
 use DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:role.view|role.add|role.edit|role.delete']);
+    }
+
     public function index()
     {
         $permission_groups = DB::table('permission_groups')->get();
+
         return view('role.role', compact(['permission_groups']));
     }
 
@@ -42,9 +49,9 @@ class RoleController extends Controller
         foreach($roles as $role){
             $html .= '<tr>
                         <td>'.$i++.'</td>
-                        <td>'.$role->name.'</td>
-                        <td><button type="button" class="btn btn-info btn-sm" onclick="openEditRoleModal('.$role->id.')">Edit</button></td>
-                     </tr>';
+                        <td>'.$role->name.'</td>';
+                        if(Auth::User()->can('role.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditRoleModal('.$role->id.')">Edit</button></td>';}
+                    $html .= '</tr>';
         }
 
         return response()->json(['status' => 'success', 'msg' => $html]);

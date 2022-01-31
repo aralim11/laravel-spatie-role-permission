@@ -25,8 +25,6 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 
-
-
     <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>

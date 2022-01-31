@@ -42,3 +42,7 @@
 .req {
     color: red;
 }
+
+.navbar-nav li:hover>.dropdown-menu {
+    display: block;
+}
