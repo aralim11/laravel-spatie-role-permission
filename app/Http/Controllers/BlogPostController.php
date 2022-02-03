@@ -60,8 +60,8 @@ class BlogPostController extends Controller
                         <td>'.$blog->name.'</td>
                         <td>'.$blog->title.'</td>';
                         if (Auth::User()->can('blog.edit') || Auth::User()->can('blog.delete')) {$html .= '<td>';
-                            if (Auth::User()->can('blog.edit')) {$html .= '<button type="button" onclick="openEditBlogModal('.$blog->id.')" class="btn btn-info btn-sm">Edit</button>';}
-                        if (Auth::User()->can('blog.delete')) {$html .= '<button type="button" onclick="deleteBlog('.$blog->id.')" class="btn btn-danger btn-sm">Edit</button>';}
+                        if (Auth::User()->can('blog.edit')) {$html .= '<button type="button" onclick="openEditBlogModal('.$blog->id.')" class="btn btn-info btn-sm">Edit</button>';}
+                        if (Auth::User()->can('blog.delete')) {$html .= '&nbsp;<button type="button" onclick="deleteBlog('.$blog->id.')" class="btn btn-danger btn-sm">Delete</button>';}
                         $html .= '</td>';}
                     $html .= '</tr>';
         }

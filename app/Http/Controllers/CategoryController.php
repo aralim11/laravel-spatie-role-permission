@@ -49,7 +49,9 @@ class CategoryController extends Controller
             $html .= '<tr>
                         <td>'.$i++.'</td>
                         <td>'.$category->name.'</td>';
-                        if (Auth::User()->can('category.edit')) {$html .= '<td><button type="button" onclick="openEditCategoryModal('.$category->id.')" class="btn btn-info btn-sm">Edit</button></td>';}
+                        if (Auth::User()->can('category.edit')) {$html .= '<td><button type="button" onclick="openEditCategoryModal('.$category->id.')" class="btn btn-info btn-sm">Edit</button>';}
+                        if (Auth::User()->can('category.delete')) {$html .= '&nbsp;<button type="button" onclick="deleteCategory('.$category->id.')" class="btn btn-danger btn-sm">Delete</button>';}
+                        $html .= '</td>';
                     $html .= '</tr>';
         }
 
@@ -94,6 +96,14 @@ class CategoryController extends Controller
                 ->update(['name' => $request->name]);
 
             return response()->json(['status' => 'success', 'msg' => 'Category Updated Successfully!!']);
+        }
+    }
+
+    public function deleteCategory($id)
+    {
+        if ($id) {
+            DB::table('category')->where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'msg' => 'Category Deleted Successfully!!']);
         }
     }
 }

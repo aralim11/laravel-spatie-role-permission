@@ -53,7 +53,9 @@ class PermissionController extends Controller
                         <td>'.$i++.'</td>
                         <td>'.$groupName->name.'</td>
                         <td>'.$permission->name.'</td>';
-                        if(Auth::User()->can('permission.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditpermissionGroupModal('.$permission->id.')">Edit</button></td>';}
+                        if(Auth::User()->can('permission.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditpermissionGroupModal('.$permission->id.')">Edit</button>';}
+                        if (Auth::User()->can('permission.delete')) {$html .= '&nbsp;<button type="button" onclick="deletePermission('.$permission->id.')" class="btn btn-danger btn-sm">Delete</button>';}
+                        $html .= '</td>';
                     $html .= '</tr>';
         }
 
@@ -110,6 +112,15 @@ class PermissionController extends Controller
                 ->update(['name' => $request->name, 'group_id' => $request->group_id]);
 
             return response()->json(['status' => 'success', 'msg' => 'Permission Updated Successfully!!']);
+        }
+    }
+
+    public function deletePermission($id)
+    {
+        if ($id) {
+            DB::table('permissions')->where('id', $id)->delete();
+            
+            return response()->json(['status' => 'success', 'msg' => 'Permission Deleted Successfully!!']);
         }
     }
 }

@@ -27,6 +27,8 @@
 
     <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    @stack('style')
 </head>
 <body>
     <div id="app">
@@ -62,11 +64,11 @@
                             @endif
                         @else
                             @if(Auth::User()->can('category.view'))<li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('/category') }}">{{ __('Category') }}</a>
+                                <a class="nav-link {{ Request::is('category') ? 'active' : '' }}" href="{{ URL::to('/category') }}">{{ __('Category') }}</a>
                             </li>@endif
 
                             @if(Auth::User()->can('blog.view'))<li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('/blog') }}">{{ __('Blog Post') }}</a>
+                                <a class="nav-link {{ Request::is('blog') ? 'active' : '' }}" href="{{ URL::to('/blog') }}">{{ __('Blog Post') }}</a>
                             </li>@endif
 
                             <li class="nav-item dropdown">
@@ -161,7 +163,6 @@
         function successAlert(msg){
             Swal.fire({
 			  position: 'top-end',
-			  icon: 'success',
 			  title: msg,
 			  showConfirmButton: false,
 			  timer: 1500
@@ -171,7 +172,6 @@
         function errorAlert(msg){
             Swal.fire({
 			  position: 'top-end',
-			  icon: 'error',
 			  title: msg,
 			  showConfirmButton: false,
 			  timer: 1500

@@ -98,11 +98,15 @@
         }
 
         function openEditCategoryModal(id){
+            Swal.fire('Please Wait. Data Processing!!');
+			Swal.showLoading();
+            
             $.ajax({
                 type: 'GET',
                 url: "/category-edit/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         $("#main_modal_content").html(resultData.msg);
                         $("#mainModal").modal('show');
@@ -132,6 +136,38 @@
                     }
                 });
             }
+        }
+
+        function deleteCategory(id)
+        {
+            Swal.fire({
+                title: 'Are You Sure To Delete?',
+                text: "If You Delete This Category Automatically Delete All Blog Under This Category.",
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete It!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Please Wait. Data Deleting!!');
+                    Swal.showLoading();
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "/category-delete/" + id,
+                        dataType: "json",
+                        success: function(resultData) {
+                            swal.close();
+                            if (resultData.status === "success") {
+                                successAlert(resultData.msg);
+                                viewCategory();
+                            } else {
+                                errorAlert(resultData.msg);
+                            }
+                        }
+                    });
+                }
+            })
         }
     </script>
 @endpush

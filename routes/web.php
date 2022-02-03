@@ -19,6 +19,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     // Home Route
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/read-blog/{id}', [HomeController::class, 'readMore']);
 
     // Permission Group Route
     Route::group(['middleware' => ['role_or_permission:permission.group.view']], function () {
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/permission-group-view', [PermissionGroupController::class, 'viewPermissionGroup']); // View Permission Group List
         Route::get('/permission-group-edit/{id}', [PermissionGroupController::class, 'editPermissionGroup']); // Edit Permission Group List
         Route::post('/permission-group-update', [PermissionGroupController::class, 'updatePermissionGroup']); // Update Permission Group List
+        Route::delete('/permission-group-delete/{id}', [PermissionGroupController::class, 'deletePermissionGroup']); // Delete Permission Group
     });
 
     // Permission Route
@@ -36,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/permission-view', [PermissionController::class, 'viewPermission']); // View Permission List
         Route::get('/permission-edit/{id}', [PermissionController::class, 'editPermission']); // Edit Permission List
         Route::post('/permission-update', [PermissionController::class, 'updatePermission']); // Update Permission
+        Route::delete('/permission-delete/{id}', [PermissionController::class, 'deletePermission']); // Delete Permission
     });
 
     // Category Route
@@ -45,6 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/category-view', [CategoryController::class, 'viewCategory']); // View Category Name
         Route::get('/category-edit/{id}', [CategoryController::class, 'editCategory']); // Edit Category Name
         Route::post('/category-update', [CategoryController::class, 'updateCategory']); // Update Category Name
+        Route::delete('/category-delete/{id}', [CategoryController::class, 'deleteCategory']); // Delete Category
     });
 
     // Blog Route
@@ -63,7 +67,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/role-store', [RoleController::class, 'roleStore']); // Store Role Name to Database
         Route::get('/role-view', [RoleController::class, 'viewRole']); // View Role
         Route::get('/role-edit/{id}', [RoleController::class, 'editRole']); // Edit Role
-        Route::post('/role-update', [RoleController::class, 'editUpdate']); // Update Role
+        Route::post('/role-update', [RoleController::class, 'updateRole']); // Update Role
+        Route::delete('/role-delete/{id}', [RoleController::class, 'deleteRole']); // Delete Role
     });
 
     //User Route

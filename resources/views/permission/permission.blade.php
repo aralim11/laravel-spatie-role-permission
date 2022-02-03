@@ -111,11 +111,15 @@
         }
 
         function openEditpermissionGroupModal(id){
+            Swal.fire('Please Wait. Data Processing!!');
+			Swal.showLoading();
+            
             $.ajax({
                 type: 'GET',
                 url: "/permission-edit/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         $("#main_modal_content").html(resultData.msg);
                         $("#mainModal").modal('show');
@@ -146,6 +150,38 @@
                     }
                 });
             }
+        }
+
+        function deletePermission(id)
+        {
+            Swal.fire({
+                title: 'Are You Sure To Delete?',
+                text: "If You Delete This Permission Automatically Delete All Under This Permission.",
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete It!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Please Wait. Data Deleting!!');
+                    Swal.showLoading();
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "/permission-delete/" + id,
+                        dataType: "json",
+                        success: function(resultData) {
+                            swal.close();
+                            if (resultData.status === "success") {
+                                successAlert(resultData.msg);
+                                viewPermission();
+                            } else {
+                                errorAlert(resultData.msg);
+                            }
+                        }
+                    });
+                }
+            })
         }
     </script>
 @endpush

@@ -118,11 +118,15 @@
         }
 
         function openEditBlogModal(id){
+            Swal.fire('Please Wait. Data Processing!!');
+			Swal.showLoading();
+
             $.ajax({
                 type: 'GET',
                 url: "/blog-edit/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         $("#main_modal_content").html(resultData.msg);
                         $("#mainModal").modal('show');
@@ -157,11 +161,15 @@
         }
 
         function deleteBlog(id){
+            Swal.fire('Please Wait. Data Deleting!!');
+			Swal.showLoading();
+
             $.ajax({
                 type: 'DELETE',
                 url: "/blog-delete/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         successAlert(resultData.msg);
                         viewBlog();

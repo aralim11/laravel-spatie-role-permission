@@ -120,11 +120,15 @@
         }
 
         function openEditUserModal(id){
+            Swal.fire('Please Wait. Data Processing!!');
+			Swal.showLoading();
+
             $.ajax({
                 type: 'GET',
                 url: "/user-edit/" + id,
                 dataType: "json",
                 success: function(resultData) {
+                    swal.close();
                     if (resultData.status === "success") {
                         $("#main_modal_content").html(resultData.msg);
                         $("#mainModal").modal('show');

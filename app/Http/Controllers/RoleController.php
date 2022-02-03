@@ -50,7 +50,9 @@ class RoleController extends Controller
             $html .= '<tr>
                         <td>'.$i++.'</td>
                         <td>'.$role->name.'</td>';
-                        if(Auth::User()->can('role.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditRoleModal('.$role->id.')">Edit</button></td>';}
+                        if(Auth::User()->can('role.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditRoleModal('.$role->id.')">Edit</button>';}
+                        if (Auth::User()->can('permission.delete')) {$html .= '&nbsp;<button type="button" onclick="deleteRole('.$role->id.')" class="btn btn-danger btn-sm">Delete</button>';}
+                        $html .= '</td>';
                     $html .= '</tr>';
         }
 
@@ -126,7 +128,7 @@ class RoleController extends Controller
         return response()->json(['status' => 'success', 'msg' => $html]);
     }
 
-    public function editUpdate(Request $request)
+    public function updateRole(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $request->id],
@@ -142,6 +144,15 @@ class RoleController extends Controller
             DB::table('roles')->where('id', $request->id)->update(['name' => $request->name]);
 
             return response()->json(['status' => 'success', 'msg' => 'Role Added Successfully!!']);
+        }
+    }
+
+    public function deleteRole($id)
+    {
+        if ($id) {
+            DB::table('roles')->where('id', $id)->delete();
+            
+            return response()->json(['status' => 'success', 'msg' => 'Role Deleted Successfully!!']);
         }
     }
 }

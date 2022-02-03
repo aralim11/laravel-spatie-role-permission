@@ -38,12 +38,13 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
-            $table->bigInteger('group_id');
+            $table->unsignedBigInteger('group_id');
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
             $table->index(['group_id']);
+            $table->foreign('group_id')->references('id')->on('permission_groups')->onDelete('cascade');
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {

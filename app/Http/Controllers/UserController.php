@@ -61,7 +61,7 @@ class UserController extends Controller
                 ->where(['model_has_roles.model_id' => $user->id])
                 ->first();
             
-                if (!empty($role)){$assignedRole = "<span class=\"badge bg-success\">$role->name</span>";} else {$assignedRole = "<span class=\"badge bg-warning text-dark\">Not Assigned Yets</span>";}
+                if (!empty($role)){$assignedRole = "<span class=\"badge bg-success\">$role->name</span>";} else {$assignedRole = "<span class=\"badge bg-warning text-dark\">Not Assigned Yet</span>";}
                 
             $html .= '<tr>
                         <td>'.$i++.'</td>

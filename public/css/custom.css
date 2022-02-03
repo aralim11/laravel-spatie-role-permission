@@ -46,3 +46,24 @@
 .navbar-nav li:hover>.dropdown-menu {
     display: block;
 }
+
+.card-title {
+    margin-bottom: 0.3rem;
+}
+  
+.cat {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+  
+.fa-users {
+    margin-left: 1rem;
+}
+  
+.card-footer {
+    font-size: 0.8rem;
+}
+
+.m-t-10 {
+    margin-top: 10px;
+}
