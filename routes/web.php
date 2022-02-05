@@ -78,5 +78,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/user-store', [UserController::class, 'storeUser']); // Store New User To Database
         Route::get('/user-edit/{id}', [UserController::class, 'editUser']); // Edit User Data View
         Route::post('/user-update', [UserController::class, 'updateUser']); // Update User
+        Route::delete('/user-delete/{id}', [UserController::class, 'deleteUser']); // Delete User
     });
 });

@@ -161,5 +161,36 @@
                 });
             }
         }
+
+        function deleteUser(id)
+        {
+            Swal.fire({
+                title: 'Are You Sure To Delete?',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete It!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Please Wait. Data Deleting!!');
+                    Swal.showLoading();
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "/user-delete/" + id,
+                        dataType: "json",
+                        success: function(resultData) {
+                            swal.close();
+                            if (resultData.status === "success") {
+                                successAlert(resultData.msg);
+                                viewUser();
+                            } else {
+                                errorAlert(resultData.msg);
+                            }
+                        }
+                    });
+                }
+            })
+        }
     </script>
 @endpush

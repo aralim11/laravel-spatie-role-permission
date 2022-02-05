@@ -69,7 +69,7 @@ class RoleController extends Controller
                     <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body edit_role_add_form">
+                <div class="modal-body" id="edit_role_add_form">
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Role Name</label>
                         <input type="text" class="form-control" value="'.$role->name.'" id="edit_name" placeholder="Enter Role Name" required>
@@ -94,7 +94,7 @@ class RoleController extends Controller
                                 $html .= '<tr class="table_bottom_border">
                                     <td class="fifty_percent">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" '.$groupChecked.' value="'.$permission_group->id.'" id="edit_permission_group_'. $permission_group->id.'" onclick="edit_checkAllPermissionByGroup('.$permission_group->id.')">
+                                            <input class="form-check-input edit-form-check" type="checkbox" '.$groupChecked.' value="'.$permission_group->id.'" id="edit_permission_group_'. $permission_group->id.'" onclick="edit_checkAllPermissionByGroup('.$permission_group->id.')">
                                             <label class="form-check-label" for="edit_permission_group_'.$permission_group->id.'">'.$permission_group->name .'</label>
                                         </div>
                                     </td>';
@@ -109,7 +109,7 @@ class RoleController extends Controller
                                             if (!empty($hasPermission)) {$selected = "checked";} else {$selected = "";}
 
                                             $html .= '<div class="form-check">
-                                                <input class="form-check-input edit-fom-check edit_checkAllPermissionByGroup_'.$permission_group->id.'" '.$selected.' onclick="edit_checkGroupByPermission('. $permission_group->id .' , '. count($permissions) .')" name="edit_checkPermission" type="checkbox" value="'.$permission->name.'" id="edit_checkPermission'.$permission->id.'">
+                                                <input class="form-check-input edit-form-check edit_checkAllPermissionByGroup_'.$permission_group->id.'" '.$selected.' onclick="edit_checkGroupByPermission('. $permission_group->id .' , '. count($permissions) .')" name="edit_checkPermission" type="checkbox" value="'.$permission->name.'" id="edit_checkPermission'.$permission->id.'">
                                                 <label class="form-check-label" for="edit_checkPermission'.$permission->id.'">'. $permission->name .'</label>
                                             </div>';
                                         }
@@ -143,7 +143,7 @@ class RoleController extends Controller
 
             DB::table('roles')->where('id', $request->id)->update(['name' => $request->name]);
 
-            return response()->json(['status' => 'success', 'msg' => 'Role Added Successfully!!']);
+            return response()->json(['status' => 'success', 'msg' => 'Role Updated Successfully!!']);
         }
     }
 

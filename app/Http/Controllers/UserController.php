@@ -68,7 +68,9 @@ class UserController extends Controller
                         <td>'.$user->name.'</td>
                         <td>'.$user->email.'</td>
                         <td>'.$assignedRole.'</td>';
-                        if (Auth::User()->can('user.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditUserModal('.$user->id.')">Edit</button></td>';}
+                        if (Auth::User()->can('user.edit')) {$html .= '<td><button type="button" class="btn btn-info btn-sm" onclick="openEditUserModal('.$user->id.')">Edit</button>';}
+                        if (Auth::User()->can('user.delete')) {$html .= '&nbsp;<button type="button" onclick="deleteUser('.$user->id.')" class="btn btn-danger btn-sm">Delete</button>';}
+                        $html .= '</td>';
                     $html .= '</tr>';
         }
 
@@ -137,6 +139,17 @@ class UserController extends Controller
             }
 
             return response()->json(['status' => 'success', 'msg' => 'User Updated Successfully!!']);
+        }
+    }
+
+
+    public function deleteUser($id)
+    {
+        if ($id) {
+            $user = User::find($id);
+            $user->delete();
+            
+            return response()->json(['status' => 'success', 'msg' => 'User Deleted Successfully!!']);
         }
     }
 }

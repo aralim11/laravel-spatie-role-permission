@@ -153,7 +153,7 @@
             });
 
             if (permissionArray.length === 0) {
-                $('.edit-fom-check').addClass('error_msg');
+                $('.edit-form-check').addClass('error_msg');
                 return false;
             } else {
                 return permissionArray;
