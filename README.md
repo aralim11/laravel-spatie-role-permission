@@ -2,6 +2,19 @@
 
 This Project is only created for to learn <a href="https://github.com/spatie/laravel-permission">Spatie Laravel Permission Package</a>.
 
+## Screenshot
+- Permission Group
+![Add Permission Group](https://github.com/aralim11/laravel-spatie-role-permission/blob/main/screenshoot/permission_group.PNG)
+
+- Permission
+![Add Permission](https://github.com/aralim11/laravel-spatie-role-permission/blob/main/screenshoot/permission.PNG)
+
+- Role
+![Add Role](https://github.com/aralim11/laravel-spatie-role-permission/blob/main/screenshoot/role.PNG)
+
+- User
+![Add User](https://github.com/aralim11/laravel-spatie-role-permission/blob/main/screenshoot/user.PNG)
+
 ## Project Setup
 ```sh
 git clone https://github.com/aralim11/laravel-spatie-role-permission

@@ -69,6 +69,29 @@
                     </form>
                 </div>
             </div>
+
+            <div class="card m-t-10">
+                <div class="card-header">{{ __('Default User') }}</div>
+
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              <th scope="col">Full Name</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td>SuperAdmin</td>
+                              <td>alim@gmail.com</td>
+                              <td>1234</td>
+                            </tr>
+                        </tbody>
+                    </table>   
+                </div>
+            </div>
         </div>
     </div>
 </div>
