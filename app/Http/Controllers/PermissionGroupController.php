@@ -70,7 +70,7 @@ class PermissionGroupController extends Controller
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="name" class="col-form-label">Permission Group Name</label>
-                        <input type="text" class="form-control" id="edit_name" value='.$permissionGroup->name.' placeholder="Enter Permission Group Name" required>
+                        <input type="text" class="form-control" id="edit_name" value="'.$permissionGroup->name.'" placeholder="Enter Permission Group Name" required>
                     </div>
                 </div>
                 <div class="modal-footer">

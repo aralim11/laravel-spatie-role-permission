@@ -125,7 +125,7 @@ class BlogPostController extends Controller
                 ->where('id', $request->id)
                 ->update(['title' => $request->title, 'category_id' => $request->category_id, 'description' => $request->description, 'updated_at' => date("Y-m-d H:i:s")]);
 
-            return response()->json(['status' => 'success', 'msg' => 'Blog Added Successfully!!']);
+            return response()->json(['status' => 'success', 'msg' => 'Blog Updated Successfully!!']);
         }
     }
 
